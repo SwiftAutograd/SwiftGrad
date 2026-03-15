@@ -2,16 +2,23 @@
 
 A tiny, fully functional **autograd engine** and **neural network library** in pure Swift. Inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd).
 
-SwiftGrad implements reverse-mode automatic differentiation (backpropagation) over a dynamically built computation graph. It's the same algorithm that powers PyTorch and TensorFlow — just on scalars instead of tensors, in ~250 lines of Swift.
+SwiftGrad implements reverse-mode automatic differentiation (backpropagation) over a dynamically built computation graph. It's the same algorithm that powers PyTorch and TensorFlow  - just on scalars instead of tensors, in ~250 lines of Swift.
 
-![SwiftRL Demo](swiftrl-demo.gif)
+![SwiftRL macOS App](swiftrl-app-demo.gif)
 
-*DQN agent learning to navigate a GridWorld — powered by SwiftGrad's autograd engine.*
+*SwiftUI macOS app: DQN agent training on GridWorld with live reward chart and training log.*
+
+<details>
+<summary>CLI demo (terminal)</summary>
+
+![SwiftRL CLI Demo](swiftrl-demo.gif)
+
+</details>
 
 ## Why?
 
 - **Educational:** Small enough to read in one sitting, complete enough to train real networks
-- **Pure Swift:** Zero dependencies, no Python, no bridging — runs natively on Apple Silicon
+- **Pure Swift:** Zero dependencies, no Python, no bridging  - runs natively on Apple Silicon
 - **Foundation:** The autograd engine that powers [SwiftRL](https://github.com/SwiftAutograd/SwiftRL), an on-device reinforcement learning library
 
 ## Installation
@@ -81,8 +88,8 @@ SwiftGrad maps 1:1 to micrograd's architecture:
 
 | Component | File | Lines | Description |
 |---|---|---|---|
-| **Engine** | `Engine.swift` | ~150 | `Value` class with autograd — tracks computation graph, runs `backward()` via topological sort |
-| **Neural Net** | `NN.swift` | ~80 | `Neuron`, `Layer`, `MLP` — built on `Value`, uses `callAsFunction` for Pythonic syntax |
+| **Engine** | `Engine.swift` | ~150 | `Value` class with autograd  - tracks computation graph, runs `backward()` via topological sort |
+| **Neural Net** | `NN.swift` | ~80 | `Neuron`, `Layer`, `MLP`  - built on `Value`, uses `callAsFunction` for Pythonic syntax |
 | **Training** | `Losses.swift` | ~40 | `Loss.mse`, `Loss.hingeLoss`, `SGD` optimizer |
 
 ### How It Works
@@ -98,7 +105,7 @@ This is the exact same algorithm (reverse-mode autodiff) used by PyTorch, JAX, a
 
 ### Swift-Specific Design Choices
 
-- **`Value` is a `class`** (reference type) — nodes in the computation graph are shared and aliased, just like Python
+- **`Value` is a `class`** (reference type)  - nodes in the computation graph are shared and aliased, just like Python
 - **Operator overloads** (`+`, `*`, `-`, `/`) replace Python's `__add__`, `__mul__`, etc.
 - **`callAsFunction`** enables `neuron(x)` and `model(x)` syntax, matching Python's `__call__`
 - **`weak` captures** in `_backward` closures prevent retain cycles in the computation graph
@@ -139,9 +146,9 @@ swift test
 
 ## Acknowledgments
 
-- [micrograd](https://github.com/karpathy/micrograd) by Andrej Karpathy — the direct inspiration for this project
-- [Karpathy's micrograd lecture](https://www.youtube.com/watch?v=VMj-3S1tku0) — "The spelled-out intro to neural networks and backpropagation"
+- [micrograd](https://github.com/karpathy/micrograd) by Andrej Karpathy  - the direct inspiration for this project
+- [Karpathy's micrograd lecture](https://www.youtube.com/watch?v=VMj-3S1tku0)  - "The spelled-out intro to neural networks and backpropagation"
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT  - see [LICENSE](LICENSE).
