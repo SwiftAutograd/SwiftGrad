@@ -156,3 +156,70 @@ import Testing
     #expect((2.0 * a).data == 12.0)
     #expect((10.0 - a).data == 4.0)
 }
+
+// MARK: - Activation and Operation Tests
+
+@Test func testLog() {
+    let a = Value(2.0)
+    let b = a.log()
+    b.backward()
+
+    // ln(2) ~ 0.6931
+    #expect(abs(b.data - 0.6931) < 0.001)
+    // d/da ln(a) = 1/a = 0.5
+    #expect(abs(a.grad - 0.5) < 1e-6)
+}
+
+@Test func testTanh() {
+    let a = Value(1.0)
+    let b = a.tanh()
+    b.backward()
+
+    // tanh(1) ~ 0.7616
+    #expect(abs(b.data - 0.7616) < 0.001)
+    // d/da tanh(a) = 1 - tanh(a)^2 ~ 1 - 0.7616^2 ~ 0.4200
+    #expect(abs(a.grad - (1 - b.data * b.data)) < 1e-6)
+}
+
+@Test func testExp() {
+    let a = Value(2.0)
+    let b = a.exp()
+    b.backward()
+
+    // exp(2) ~ 7.3891
+    #expect(abs(b.data - 7.3891) < 0.001)
+    // d/da exp(a) = exp(a)
+    #expect(abs(a.grad - b.data) < 1e-6)
+}
+
+@Test func testDivisionGradients() {
+    let a = Value(6.0)
+    let b = Value(3.0)
+    let c = a / b
+    c.backward()
+
+    // c = a / b = a * b^(-1), dc/da = 1/b = 1/3
+    #expect(abs(c.data - 2.0) < 1e-6)
+    #expect(abs(a.grad - (1.0 / 3.0)) < 1e-6)
+    // dc/db = -a / b^2 = -6/9 = -2/3
+    #expect(abs(b.grad - (-2.0 / 3.0)) < 1e-4)
+}
+
+@Test func testNegativeGradientFlow() {
+    let a = Value(3.0)
+    let b = -a
+    let c = b * Value(2.0)
+    c.backward()
+
+    // c = -a * 2 = -2a, dc/da = -2
+    #expect(c.data == -6.0)
+    #expect(abs(a.grad - (-2.0)) < 1e-6)
+}
+
+@Test func testBackwardOnSingleValue() {
+    let a = Value(5.0)
+    a.backward()
+
+    // Calling backward on a leaf node should set its own gradient to 1.0
+    #expect(a.grad == 1.0)
+}

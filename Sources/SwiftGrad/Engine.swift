@@ -1,7 +1,7 @@
 import Foundation
 
 /// A single scalar value that tracks its computational graph for automatic differentiation.
-/// This is the core building block — equivalent to micrograd's `Value` class.
+/// This is the core building block - equivalent to micrograd's `Value` class.
 public final class Value {
 
     /// The scalar data this node holds.

@@ -63,7 +63,7 @@ public final class Layer: Module {
         self.neurons = (0..<outputSize).map { _ in Neuron(inputSize: inputSize, nonlin: nonlin) }
     }
 
-    /// Forward pass — returns array of outputs, one per neuron.
+    /// Forward pass - returns array of outputs, one per neuron.
     public func callAsFunction(_ x: [Value]) -> [Value] {
         neurons.map { $0(x) }
     }

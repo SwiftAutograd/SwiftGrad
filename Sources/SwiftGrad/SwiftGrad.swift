@@ -1,4 +1,4 @@
-// SwiftGrad — A tiny autograd engine and neural network library in Swift.
+// SwiftGrad - A tiny autograd engine and neural network library in Swift.
 // Inspired by Andrej Karpathy's micrograd (https://github.com/karpathy/micrograd).
 //
 // Components:
