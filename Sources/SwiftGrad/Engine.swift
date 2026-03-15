@@ -83,6 +83,17 @@ public final class Value {
         return out
     }
 
+    /// Natural logarithm: ln(self)
+    public func log() -> Value {
+        let base = data
+        let out = Value(Darwin.log(data), children: [self], op: "log")
+        out._backward = { [weak self, weak out] in
+            guard let self, let out else { return }
+            self.grad += (1.0 / base) * out.grad
+        }
+        return out
+    }
+
     /// Exponential: e^self
     public func exp() -> Value {
         let e = Darwin.exp(data)
