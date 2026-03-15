@@ -4,6 +4,10 @@ A tiny, fully functional **autograd engine** and **neural network library** in p
 
 SwiftGrad implements reverse-mode automatic differentiation (backpropagation) over a dynamically built computation graph. It's the same algorithm that powers PyTorch and TensorFlow — just on scalars instead of tensors, in ~250 lines of Swift.
 
+![SwiftRL Demo](swiftrl-demo.gif)
+
+*DQN agent learning to navigate a GridWorld — powered by SwiftGrad's autograd engine.*
+
 ## Why?
 
 - **Educational:** Small enough to read in one sitting, complete enough to train real networks
